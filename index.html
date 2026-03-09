@@ -112,6 +112,19 @@
       text-transform: uppercase;
       letter-spacing: 0.06em;
     }
+    .video-wrap {
+      width: 100%;
+      max-width: 720px;
+      margin: 40px auto 0;
+      border-radius: 12px;
+      overflow: hidden;
+      border: 1px solid #222;
+      box-shadow: 0 0 40px rgba(79,142,247,0.08);
+    }
+    .video-wrap video {
+      width: 100%;
+      display: block;
+    }
     footer {
       margin-top: 64px;
       color: #333;
@@ -124,6 +137,12 @@
   <div class="badge">Real builds. No theory.</div>
 
   <h1>I'm a technology architect by day.<br><span>Building AI income systems</span> by night.</h1>
+
+  <div class="video-wrap">
+    <video autoplay muted loop playsinline controls>
+      <source src="intro.mp4" type="video/mp4">
+    </video>
+  </div>
 
   <div class="divider"></div>
 

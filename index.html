@@ -148,13 +148,10 @@
       btn.textContent = 'Sending...';
       btn.disabled = true;
       try {
-        const res = await fetch('https://api.systeme.io/api/contacts', {
+        const res = await fetch('/api/subscribe', {
           method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            'X-API-Key': '2raw81qdmtw82sjexva4vcydes7bqv6pkaqwb4bjx599vm6xsqa2p0611psuzm3o'
-          },
-          body: JSON.stringify({ email: email, fields: [], tags: ['stevebuildsai'] })
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ email })
         });
         if (res.ok || res.status === 409) {
           btn.textContent = "You're in ✓";

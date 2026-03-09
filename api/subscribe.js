@@ -37,7 +37,7 @@ export default async function handler(req, res) {
   await fetch(`https://api.systeme.io/api/contacts/${contactId}/tags`, {
     method: 'POST',
     headers,
-    body: JSON.stringify({ tagId: 1910557 })
+    body: JSON.stringify({ tag_id: 1910557 })
   });
 
   res.status(200).json({ ok: true });

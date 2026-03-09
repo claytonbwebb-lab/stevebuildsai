@@ -133,11 +133,43 @@
   </p>
   <p class="sub">Drop your email and I'll show you exactly how.</p>
 
-  <form name="waitlist" method="POST" data-netlify="true" action="/thanks">
-    <input type="email" name="email" placeholder="your@email.com" required />
-    <button type="submit">Show me how →</button>
-    <p class="note">No spam. Unsubscribe any time.</p>
+  <form id="signup-form">
+    <input type="email" id="email-input" placeholder="your@email.com" required />
+    <button type="submit" id="submit-btn">Show me how →</button>
+    <p class="note" id="form-note">No spam. Unsubscribe any time.</p>
   </form>
+
+  <script>
+    document.getElementById('signup-form').addEventListener('submit', async function(e) {
+      e.preventDefault();
+      const email = document.getElementById('email-input').value;
+      const btn = document.getElementById('submit-btn');
+      const note = document.getElementById('form-note');
+      btn.textContent = 'Sending...';
+      btn.disabled = true;
+      try {
+        const res = await fetch('https://api.systeme.io/api/contacts', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'X-API-Key': '2raw81qdmtw82sjexva4vcydes7bqv6pkaqwb4bjx599vm6xsqa2p0611psuzm3o'
+          },
+          body: JSON.stringify({ email: email, fields: [], tags: ['stevebuildsai'] })
+        });
+        if (res.ok || res.status === 409) {
+          btn.textContent = "You're in ✓";
+          note.textContent = "Check your inbox — speak soon.";
+          document.getElementById('email-input').style.display = 'none';
+        } else {
+          throw new Error('Failed');
+        }
+      } catch(err) {
+        btn.textContent = 'Show me how →';
+        btn.disabled = false;
+        note.textContent = 'Something went wrong — try again.';
+      }
+    });
+  </script>
 
   <div class="proof">
     <div class="proof-item">

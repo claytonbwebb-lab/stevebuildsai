@@ -12,7 +12,7 @@ export default async function handler(req, res) {
     body: JSON.stringify({ email, fields: [], tags: ['stevebuildsai'] })
   });
 
-  if (r.ok || r.status === 409) {
+  if (r.ok || r.status === 409 || r.status === 422) {
     res.status(200).json({ ok: true });
   } else {
     res.status(500).json({ error: 'Failed' });

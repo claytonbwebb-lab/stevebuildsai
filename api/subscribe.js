@@ -26,7 +26,7 @@ export default async function handler(req, res) {
     contactId = data.id;
   } else {
     // 422 = already exists, look them up
-    const lookup = await fetch(`https://api.systeme.io/api/contacts?email=${encodeURIComponent(email)}`, { headers });
+    const lookup = await fetch(`https://api.systeme.io/api/contacts?filters[0][field]=email&filters[0][operator]=equals&filters[0][value]=${encodeURIComponent(email)}`, { headers });
     const data = await lookup.json();
     contactId = data.items?.[0]?.id;
   }

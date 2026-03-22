@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Steve Builds AI — The Course</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --bg: #0f0f0f;
+    --surface: #161616;
+    --surface2: #1c1c1c;
+    --border: #222;
+    --accent: #3b82f6;
+    --accent-glow: rgba(59,130,246,0.25);
+    --text: #f0f0f0;
+    --muted: #888;
+    --locked: #2a2a2a;
+  }
+  body { background: var(--bg); color: var(--text); font-family: 'Inter', sans-serif; line-height: 1.6; }
+  a { color: var(--accent); text-decoration: none; }
+
+  /* NAV */
+  nav { display: flex; align-items: center; justify-content: space-between; padding: 1.2rem 2rem; border-bottom: 1px solid var(--border); background: rgba(15,15,15,0.95); backdrop-filter: blur(12px); position: sticky; top: 0; z-index: 100; }
+  .nav-logo { font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: 1.1rem; color: var(--text); }
+  .nav-logo span { color: var(--accent); }
+  .back-link { color: var(--muted); font-size: 0.9rem; display: flex; align-items: center; gap: 0.4rem; transition: color 0.2s; }
+  .back-link:hover { color: var(--text); }
+
+  /* PAGE HEADER */
+  .page-header { max-width: 860px; margin: 0 auto; padding: 4rem 2rem 2rem; }
+  .page-header h1 { font-family: 'Space Grotesk', sans-serif; font-size: clamp(1.8rem, 4vw, 2.8rem); font-weight: 800; margin-bottom: 0.75rem; }
+  .page-header h1 span { color: var(--accent); }
+  .page-header p { color: var(--muted); font-size: 1.05rem; max-width: 600px; }
+
+  /* MAIN CONTENT */
+  .content { max-width: 860px; margin: 0 auto; padding: 1rem 2rem 4rem; }
+
+  /* VIDEO PLAYER */
+  .video-wrap { background: #000; border: 1px solid var(--border); border-radius: 12px; overflow: hidden; margin-bottom: 1.5rem; position: relative; padding-top: 56.25%; }
+  .video-wrap iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 0; }
+  .video-meta { margin-bottom: 2.5rem; }
+  .video-meta h2 { font-family: 'Space Grotesk', sans-serif; font-size: 1.5rem; font-weight: 700; margin-bottom: 0.4rem; }
+  .video-meta .video-badge { display: inline-flex; align-items: center; gap: 0.4rem; background: rgba(34,197,94,0.15); color: #22c55e; border: 1px solid rgba(34,197,94,0.3); border-radius: 999px; padding: 0.25rem 0.8rem; font-size: 0.78rem; font-weight: 600; margin-bottom: 0.75rem; }
+  .video-meta p { color: var(--muted); font-size: 0.95rem; }
+
+  /* MODULE */
+  .module { margin-bottom: 2.5rem; }
+  .module-header { display: flex; align-items: center; gap: 0.75rem; margin-bottom: 1rem; padding-bottom: 0.75rem; border-bottom: 1px solid var(--border); }
+  .module-header h3 { font-family: 'Space Grotesk', sans-serif; font-size: 1rem; font-weight: 700; color: var(--text); }
+  .module-num { background: var(--accent); color: #fff; font-weight: 700; font-size: 0.75rem; border-radius: 4px; padding: 0.2rem 0.5rem; font-family: 'Space Grotesk', sans-serif; }
+
+  /* LESSON CARDS */
+  .lesson-list { display: flex; flex-direction: column; gap: 0.6rem; }
+  .lesson-card { display: flex; align-items: center; gap: 1rem; background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 1rem 1.2rem; transition: border-color 0.2s; }
+  .lesson-card.active { border-color: var(--accent); cursor: pointer; }
+  .lesson-card.active:hover { background: var(--surface2); }
+  .lesson-card.locked { background: var(--locked); border-color: #2a2a2a; cursor: not-allowed; opacity: 0.65; }
+  .lesson-icon { font-size: 1.2rem; flex-shrink: 0; width: 28px; text-align: center; }
+  .lesson-info { flex: 1; min-width: 0; }
+  .lesson-title { font-family: 'Space Grotesk', sans-serif; font-size: 0.95rem; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .lesson-card.locked .lesson-title { color: var(--muted); }
+  .lesson-badge { font-size: 0.75rem; color: #22c55e; font-weight: 500; }
+  .lesson-card.locked .lesson-badge { color: var(--muted); }
+  .coming-soon { font-size: 0.72rem; color: var(--muted); background: var(--bg); border: 1px solid var(--border); border-radius: 4px; padding: 0.15rem 0.5rem; white-space: nowrap; flex-shrink: 0; }
+
+  /* EMAIL FORM */
+  .notify-section { background: var(--surface); border: 1px solid var(--border); border-radius: 16px; padding: 2.5rem 2rem; margin-top: 3rem; text-align: center; }
+  .notify-section h3 { font-family: 'Space Grotesk', sans-serif; font-size: 1.4rem; font-weight: 700; margin-bottom: 0.5rem; }
+  .notify-section p { color: var(--muted); margin-bottom: 1.8rem; }
+  .notify-form { display: flex; flex-wrap: wrap; gap: 0.75rem; justify-content: center; max-width: 520px; margin: 0 auto; }
+  .notify-form input { flex: 1; min-width: 160px; background: var(--bg); border: 1px solid var(--border); color: var(--text); border-radius: 8px; padding: 0.7rem 1rem; font-size: 0.95rem; font-family: 'Inter', sans-serif; outline: none; transition: border-color 0.2s; }
+  .notify-form input:focus { border-color: var(--accent); }
+  .notify-form input::placeholder { color: var(--muted); }
+  .btn-submit { background: var(--accent); color: #fff; font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: 0.95rem; padding: 0.7rem 1.6rem; border: none; border-radius: 8px; cursor: pointer; transition: opacity 0.2s; white-space: nowrap; }
+  .btn-submit:hover { opacity: 0.85; }
+
+  footer { border-top: 1px solid var(--border); padding: 1.5rem 2rem; text-align: center; color: var(--muted); font-size: 0.85rem; }
+
+  @media(max-width: 600px) {
+    nav { padding: 1rem; }
+    .page-header, .content { padding-left: 1.2rem; padding-right: 1.2rem; }
+    .notify-form { flex-direction: column; }
+    .notify-form input, .btn-submit { width: 100%; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-logo">Steve Builds <span>AI</span></div>
+  <a href="/" class="back-link">← Back to home</a>
+</nav>
+
+<div class="page-header">
+  <h1>Steve Builds AI — <span>The Course</span></h1>
+  <p>Watch how I build real AI businesses from scratch — tools, systems, and income streams.</p>
+</div>
+
+<div class="content">
+
+  <!-- Active video -->
+  <div class="video-wrap">
+    <iframe src="https://www.youtube.com/embed/dQw4w9WgXcQ" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+  </div>
+  <div class="video-meta">
+    <div class="video-badge">✅ Lesson 1 · Free</div>
+    <h2>The AI Business Stack</h2>
+    <p>Duration: ~3 min · In this first lesson I walk through the exact stack of AI tools and systems I use to run multiple income streams. You'll leave knowing exactly what to set up and why — no fluff, no theory, just what works.</p>
+  </div>
+
+  <!-- Module 1 -->
+  <div class="module">
+    <div class="module-header">
+      <span class="module-num">M1</span>
+      <h3>Module 1 — The Foundation</h3>
+    </div>
+    <div class="lesson-list">
+      <div class="lesson-card active">
+        <div class="lesson-icon">▶️</div>
+        <div class="lesson-info">
+          <div class="lesson-title">Lesson 1: The AI Business Stack</div>
+          <div class="lesson-badge">✅ Unlocked · Free</div>
+        </div>
+      </div>
+      <div class="lesson-card locked">
+        <div class="lesson-icon">🔒</div>
+        <div class="lesson-info">
+          <div class="lesson-title">Lesson 2: Setting Up Your AI Assistant</div>
+          <div class="lesson-badge">Locked</div>
+        </div>
+        <span class="coming-soon">Coming Soon</span>
+      </div>
+      <div class="lesson-card locked">
+        <div class="lesson-icon">🔒</div>
+        <div class="lesson-info">
+          <div class="lesson-title">Lesson 3: Your First Automated Campaign</div>
+          <div class="lesson-badge">Locked</div>
+        </div>
+        <span class="coming-soon">Coming Soon</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Module 2 -->
+  <div class="module">
+    <div class="module-header">
+      <span class="module-num">M2</span>
+      <h3>Module 2 — Building Income Streams</h3>
+    </div>
+    <div class="lesson-list">
+      <div class="lesson-card locked">
+        <div class="lesson-icon">🔒</div>
+        <div class="lesson-info">
+          <div class="lesson-title">Lesson 4: The Client Website Pitch</div>
+          <div class="lesson-badge">Locked</div>
+        </div>
+        <span class="coming-soon">Coming Soon</span>
+      </div>
+      <div class="lesson-card locked">
+        <div class="lesson-icon">🔒</div>
+        <div class="lesson-info">
+          <div class="lesson-title">Lesson 5: Running Email Campaigns on Autopilot</div>
+          <div class="lesson-badge">Locked</div>
+        </div>
+        <span class="coming-soon">Coming Soon</span>
+      </div>
+      <div class="lesson-card locked">
+        <div class="lesson-icon">🔒</div>
+        <div class="lesson-info">
+          <div class="lesson-title">Lesson 6: Building SaaS Products with AI</div>
+          <div class="lesson-badge">Locked</div>
+        </div>
+        <span class="coming-soon">Coming Soon</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Module 3 -->
+  <div class="module">
+    <div class="module-header">
+      <span class="module-num">M3</span>
+      <h3>Module 3 — Advanced Operations</h3>
+    </div>
+    <div class="lesson-list">
+      <div class="lesson-card locked">
+        <div class="lesson-icon">🔒</div>
+        <div class="lesson-info">
+          <div class="lesson-title">Lesson 7: Mission Control — Your Business Dashboard</div>
+          <div class="lesson-badge">Locked</div>
+        </div>
+        <span class="coming-soon">Coming Soon</span>
+      </div>
+      <div class="lesson-card locked">
+        <div class="lesson-icon">🔒</div>
+        <div class="lesson-info">
+          <div class="lesson-title">Lesson 8: AI Receptionists for Clients</div>
+          <div class="lesson-badge">Locked</div>
+        </div>
+        <span class="coming-soon">Coming Soon</span>
+      </div>
+      <div class="lesson-card locked">
+        <div class="lesson-icon">🔒</div>
+        <div class="lesson-info">
+          <div class="lesson-title">Lesson 9: Scaling to Multiple Clients</div>
+          <div class="lesson-badge">Locked</div>
+        </div>
+        <span class="coming-soon">Coming Soon</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Email Capture -->
+  <div class="notify-section">
+    <h3>Get Notified When New Lessons Drop</h3>
+    <p>New modules are being added regularly. Drop your email and I'll let you know when they're live.</p>
+    <form class="notify-form" onsubmit="return false;">
+      <input type="text" placeholder="Your name" autocomplete="off">
+      <input type="email" placeholder="Your email" autocomplete="off">
+      <button class="btn-submit" type="submit">Notify Me →</button>
+    </form>
+  </div>
+
+</div>
+
+<footer>
+  <p>© 2025 Steve Builds AI · stevebuildsai.com</p>
+</footer>
+
+</body>
+</html>

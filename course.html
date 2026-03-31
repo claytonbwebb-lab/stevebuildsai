@@ -40,6 +40,7 @@
   /* VIDEO PLAYER */
   .video-wrap { background: #000; border: 1px solid var(--border); border-radius: 12px; overflow: hidden; margin-bottom: 1.5rem; position: relative; padding-top: 56.25%; }
   .video-wrap iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 0; }
+  .video-wrap video { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 0; }
   .video-meta { margin-bottom: 2.5rem; }
   .video-meta h2 { font-family: 'Space Grotesk', sans-serif; font-size: 1.5rem; font-weight: 700; margin-bottom: 0.4rem; }
   .video-meta .video-badge { display: inline-flex; align-items: center; gap: 0.4rem; background: rgba(34,197,94,0.15); color: #22c55e; border: 1px solid rgba(34,197,94,0.3); border-radius: 999px; padding: 0.25rem 0.8rem; font-size: 0.78rem; font-weight: 600; margin-bottom: 0.75rem; }
@@ -102,7 +103,9 @@
 
   <!-- Active video -->
   <div class="video-wrap">
-    <iframe src="https://www.youtube.com/embed/dQw4w9WgXcQ" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+    <video controls preload="metadata">
+      <source src="/lesson1.mp4" type="video/mp4">
+    </video>
   </div>
   <div class="video-meta">
     <div class="video-badge">✅ Lesson 1 · Free</div>

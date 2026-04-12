@@ -47,9 +47,10 @@ This course isn't finished yet. I'm still adding to it. But you can get early ac
 
 Already on the site? Just enter your email below and I'll keep you posted.
 
-Check it out at stevebuildsai dot co dot uk. I'll see you there.`;
+Check it out at steve builds ai dot co dot uk. I'll see you there.`;
 
-const SCRIPT_FEMALE = `Ready to start building your own AI-powered business? Head over to stevebuildsai dot co dot uk and drop your email to get early access. I'll see you there.`;
+// Simplified for single clip
+const SCRIPT_FEMALE = ``;
 
 async function generateElevenLabsAudio(text, voiceId, filename) {
   const filepath = path.join(UPLOAD_DIR, filename);
@@ -77,7 +78,7 @@ async function generateElevenLabsAudio(text, voiceId, filename) {
   return `${AUDIO_BASE_URL}/${filename}`;
 }
 
-async function submitToHeyGen(steveAudioUrl, femaleAudioUrl) {
+async function submitToHeyGen(steveAudioUrl) {
   const payload = {
     video_inputs: [
       {
@@ -89,21 +90,6 @@ async function submitToHeyGen(steveAudioUrl, femaleAudioUrl) {
         voice: {
           type: 'audio',
           audio_url: steveAudioUrl,
-        },
-        background: {
-          type: 'color',
-          value: '#1a1a2e',
-        },
-      },
-      {
-        character: {
-          type: 'avatar',
-          avatar_id: FEMALE_AVATAR_ID,
-          avatar_style: 'normal',
-        },
-        voice: {
-          type: 'audio',
-          audio_url: femaleAudioUrl,
         },
         background: {
           type: 'color',
@@ -163,7 +149,7 @@ async function pollStatus(videoId) {
 
     // Step 2: Submit to HeyGen
     console.log('\n=== Step 2: Submitting to HeyGen ===');
-    const heygenRes = await submitToHeyGen(steveAudioUrl, femaleAudioUrl);
+    const heygenRes = await submitToHeyGen(steveAudioUrl);
 
     if (!heygenRes?.data?.video_id) {
       console.error('No video_id returned');
